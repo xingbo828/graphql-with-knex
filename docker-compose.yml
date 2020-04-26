@@ -1,0 +1,19 @@
+version: "3.6"
+
+services:
+  db:
+    container_name: my-todo-db
+    image: postgres:10.9-alpine
+    environment:
+      - POSTGRES_USER=xingbo828
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=mytodo
+    ports:
+      - 5432:5432
+    volumes:
+      - mytodo-db-data:/var/lib/postgresql/data
+
+
+volumes:
+  mytodo-db-data:
+    external: true
