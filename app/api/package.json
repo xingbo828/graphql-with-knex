@@ -1,0 +1,19 @@
+{
+  "name": "mytodo-api",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "nodemon --config .nodemonrc src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-fastify": "^2.12.0",
+    "dotenv": "^8.2.0",
+    "fastify": "^2.13.1",
+    "fastify-plugin": "^1.6.1",
+    "knex": "^0.21.0",
+    "nodemon": "^2.0.3",
+    "pg": "^8.0.3"
+  }
+}

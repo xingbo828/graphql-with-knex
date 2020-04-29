@@ -19,10 +19,6 @@ const graphQL = async (server, { services, path }) => {
     return acc.concat([playgroundTab])
   }, [])
 
-  const dataSources = services.reduce((acc, service) => {
-    const dataSource = server[service].dataSource
-    return {...acc, ...dataSource}
-  }, {})
 
   const apollo = new ApolloServer({
     typeDefs,
@@ -33,7 +29,7 @@ const graphQL = async (server, { services, path }) => {
       },
       tabs: playgroundTabs,
     },
-    dataSources: () => dataSources,
+    dataSources: () => ({ database: server.knex }),
     tracing: true
   })
   server.register(apollo.createHandler({ path }))
@@ -42,4 +38,6 @@ const graphQL = async (server, { services, path }) => {
 module.exports = fp(graphQL, {
   fastify: '>=1.1.0',
   name: 'graphQL'
+}, {
+  dependencies: ['knex']
 })

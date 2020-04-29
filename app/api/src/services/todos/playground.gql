@@ -32,4 +32,6 @@ fragment todo on Todo {
   id
   title
   notes
+  isCompleted
+  category
 }

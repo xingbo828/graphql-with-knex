@@ -6,17 +6,13 @@
     "docker:create-volume": "docker volume create --name mytodo-db-data -d local",
     "docker:start": "npm run docker:create-volume && docker-compose up -d db",
     "docker:stop": "docker-compose down",
-    "start": "nodemon --config .nodemonrc src/index.js"
+    "start:api": "cd ./app/api && npm run start",
+    "start:ui:antd": "cd ./app/ui-antd && npm run start",
+    "start": "npm run docker:start && concurrently npm:start:api npm:start:ui:antd"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "apollo-server-fastify": "^2.12.0",
-    "dotenv": "^8.2.0",
-    "fastify": "^2.13.1",
-    "fastify-plugin": "^1.6.1",
-    "knex": "^0.21.0",
-    "nodemon": "^2.0.3",
-    "pg": "^8.0.3"
+  "devDependencies": {
+    "concurrently": "^5.2.0"
   }
 }

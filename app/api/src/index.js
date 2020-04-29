@@ -9,6 +9,7 @@ const todos = require('./services/todos')
 
 fastify.register(knexPlugin, {
   client: 'pg',
+  // debug: true,
   connection: {
     host : process.env.PGHOST,
     database: process.env.PGDATABASE,
