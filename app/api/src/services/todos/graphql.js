@@ -3,14 +3,6 @@ const { readFileSync } = require('fs')
 const { resolve } = require('path')
 
 exports.typeDefs = gql`
-  input TodoInput {
-    "Partial update on an existing todo"
-    title: String
-    notes: String
-    isCompleted: Boolean
-    categoryId: Int
-  }
-
   type Todo {
     id: ID!
     title: String!
@@ -25,9 +17,16 @@ exports.typeDefs = gql`
   }
 
   type Mutation {
-    createTodo(title:String!): Todo
+    createTodo(values:TodoInput!): Todo
     deleteTodo(id:ID!): Todo
     updateTodo(id:ID!, values: TodoInput!): Todo
+  }
+
+  input TodoInput {
+    title: String!
+    notes: String!
+    isCompleted: Boolean
+    categoryId: Int!
   }
 `
 
@@ -43,9 +42,15 @@ exports.resolvers = {
     }
   },
   Mutation: {
-    createTodo: async (parent, { title }, { dataSources }) => {
+    createTodo: async (parent, { values }, { dataSources }) => {
+      const mappedValues = {
+        notes: values.notes,
+        title: values.title,
+        category_id: values.categoryId,
+        is_completed: values.isCompleted
+      }
       const data = await dataSources.database('todos').insert({
-        title
+        ...mappedValues
       }).returning('*')
       return data[0]
     },

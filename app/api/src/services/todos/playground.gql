@@ -10,8 +10,8 @@ query GetTodo($id: ID!) {
   }
 }
 
-mutation CreateTodo($title: String!) {
-  createTodo(title: $title) {
+mutation CreateTodo($values: TodoInput!) {
+  createTodo(values: $values) {
     ...todo
   }
 }
